@@ -1,0 +1,73 @@
+/*
+This problem required the program to take a string as an input and determine if the input was a palindrome according to the ascii values of said string. 
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+
+int main(){
+
+	string input;
+	
+	string output;
+	
+	getline(cin, input);
+	
+	int out;
+
+	vector<int> ascii;
+	
+	for(int i = 0 ; i < input.size() ; ++i){
+		
+		out = input[i] - NULL;
+	
+		ascii.push_back(out);
+	
+	}
+	
+	bool flag = true;
+	
+	//CHECKING IF PALINDROME.
+	
+	string temp;
+	
+	
+	for(int i = 0 ; i < ascii.size() ; i++){
+		
+		temp = to_string(ascii[i]);
+		
+		output += temp;	
+	}
+	
+	
+	int counter = output.size();
+	
+	for(int i = 0; i < output.size(); ++i){
+		
+		if(output[i] != output[counter-i-1])
+			flag = false;		
+	
+	}
+	
+	
+	
+	if(flag == true){
+		
+		cout << "palindrome" << endl;
+		
+	}else if(flag == false){
+		
+		cout << "not palindrome" << endl;
+		
+	}
+	
+}
+
+//36, 87, 97, 38, 66, 83, 79, 78, 63
+
+//368797386
+//683797863
