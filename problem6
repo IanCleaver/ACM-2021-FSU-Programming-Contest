@@ -1,3 +1,7 @@
+/*
+This problem consisted of dealing with input syntax and priority queues for a Bank Line. 
+*/
+
 #include <iostream>
 #include <string>
 #include <vector>
