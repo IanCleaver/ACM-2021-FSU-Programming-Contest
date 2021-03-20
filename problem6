@@ -1,0 +1,155 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+
+struct customers{
+	
+	string name;
+	int priority;
+	
+};
+
+struct teller{
+	
+	int tellr;
+	string customer;
+	
+};
+
+queue<customers> sort_queue(queue<customers> bankline);
+bool comparePriority(customers c1, customers c2);
+
+int main(){
+
+	int nTellers;
+	
+	cin >> nTellers;
+	
+	queue<customers> bankline;
+	
+	int counter = 0;
+	
+	string check;
+	
+	customers temp;
+	
+	while(check != "STOP"){
+		
+		cin >> check;
+		
+		if(check == "STOP")
+			break;
+		
+		cin >> temp.priority;
+		temp.name = check;
+		
+		bankline.push(temp);
+		
+	}
+	
+	bankline = sort_queue(bankline);
+	
+	vector<teller> tellers;
+	
+	for(int i = 1; i <= nTellers; i++){
+		teller temp;
+		temp.tellr = i;
+		tellers.push_back(temp);
+	}
+
+	while(check != "CLOSE"){
+		
+		cin >> check;
+		
+		if(check == "CLOSE")
+			break;
+
+		if(!isdigit(check[0])){
+			//add person to queue
+			customers add_cust;
+			
+			add_cust.name = check;
+			cin >> add_cust.priority;
+			
+			bankline.push(add_cust);
+			
+			bankline = sort_queue(bankline);
+			
+		}else{
+
+			int teller_available;
+			int thuh;
+			string testing = bankline.front().name;
+
+			
+			teller_available = stoi(check);
+			
+
+			
+			for(int i = 0; i < nTellers ; ++i){
+				
+				if(tellers[i].tellr == teller_available){
+					
+					tellers[i].customer = testing;
+					thuh = i;
+				}
+				
+			}
+			
+			bankline.pop();
+		}		
+	}
+	
+	for(int i = 1 ; i <= nTellers ; ++i){
+		
+		cout << "teller " << i << ": " << tellers[i-1].customer;
+		
+		cout << endl;
+	}
+	
+	while(!bankline.empty()){
+		
+		cout << bankline.front().name << endl;
+		
+		bankline.pop();
+		
+	}
+}
+
+queue<customers> sort_queue(queue<customers> bankline){
+	
+	vector<customers> sorting;
+	
+	queue<customers> sorted_queue;
+	
+	customers temp;
+	
+	while(!bankline.empty()){
+		
+		temp.name = bankline.front().name;
+		temp.priority = bankline.front().priority;
+		sorting.push_back(temp);
+		
+		bankline.pop();		
+	}
+	
+	sort(sorting.begin(), sorting.end(), comparePriority);
+	
+	for(int i = 0 ; i < sorting.size() ; ++i){
+		
+		sorted_queue.push(sorting[i]);
+		
+	}
+
+return sorted_queue;
+}
+
+bool comparePriority(customers c1, customers c2){
+	
+	return (c1.priority < c2.priority);
+	
+}
